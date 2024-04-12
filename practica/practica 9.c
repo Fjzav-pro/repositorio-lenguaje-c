@@ -1,7 +1,7 @@
 #include<stdio.h>
 int main(int argc, char const *argv[])
 {
-    int numbers[2];
+    int numbers[5];
     numbers[0]=3;
     numbers[1]=5;
     numbers[2]=4;
