@@ -2,6 +2,6 @@
 typedef struct CIUDAD
 {
     char nombre[50];
-    char describcion[100];
+    char descripcion[100];
     int id;
 };
