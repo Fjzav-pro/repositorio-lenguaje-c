@@ -15,6 +15,13 @@ CIUDAD buscar(CIUDAD *c);
 int menu();
 void principal();
 void pedirDatos();
+void mostrarDatos();
+void showData(CIUDAD &c);
+void buscarPorID();
+void editarDatos();
+void eliminarDatos();
+
+
 
 void agregar(CIUDAD *c)
 {
@@ -37,15 +44,16 @@ CIUDAD buscar(int id)
 
 int obtPos(int id)
 {
-    int posi = -1;
+    
     for (int i = 0; i < pos; i++)
     {
-        if (ciudades[i].id == id)
-            posi = i;
-        return posi;
+        if (ciudades[i].id == id){
+            return i;
+        }
 
-        return posi;
+       
     }
+     return -1;
 }
 
 void editar(CIUDAD *c, int id)
@@ -91,6 +99,18 @@ void principal()
         case 1:
             pedirDatos();
             break;
+        case 2:
+            editarDatos();
+            break;
+        case 3:
+            eliminarDatos();
+            break;
+        case 4:
+            buscarPorID();
+            break;
+        case 5:
+            mostrarDatos();
+            break;
         case 6:
             cout << "adios, mi tierno\n";
             break;
@@ -98,6 +118,7 @@ void principal()
             cout << "no seeas\n";
             break;
         }
+        
     } while (op != 6);
 }
 
@@ -107,10 +128,75 @@ void pedirDatos()
     cout << "datos de ciudad \n";
     cout << "ID: ";
     cin >> ciudad.id;
+    if(obtPos(ciudad.id) != -1){
+        cout << "ya existe, loquillo \n";
+        return;
+    }
     cout << "Nombre: ";
-    cin >> ciudad.nombre;
+    scanf (" %[^\n]", ciudad.nombre);
     cout << "Descripcion: ";
-    cin >> ciudad.descripcion;
+    scanf(" %[^\n]", ciudad.descripcion);
     agregar(&ciudad);
-    cout << "registro agregado.... \n";
+    cout << "registro agregado.... \n";}
+
+
+void mostrarDatos(){
+
+    if (pos == 0){
+        cout << "no hay registro \n";
+        return;
+    }
+    for(int i =0; i<pos; i++){
+       showData(ciudades[i]);
+
+    }
+}
+void buscarPorID (){
+    int id;
+    cout << "Dime el Id de la ciudad a buscar: ";
+    cin >> id;
+
+    CIUDAD c;
+    c = buscar(id);
+   
+}
+
+void showData(CIUDAD &c){
+    cout <<"==================" << endl;
+    cout << c.id << endl;
+    cout << c.nombre << endl;
+    cout << c.descripcion << endl;
+    cout << "==============" << endl;
+}
+
+void editarDatos(){
+    int id;
+    cout << "escribe el Id de la ciudad a editar" << endl;
+    cin >> id;
+    if(obtPos(id)== -1){
+        cout << "no se encontro registro \n";
+        return;
+    }
+    CIUDAD c = buscar(id);
+    cout << "datos actuales:\n ";
+    showData(c);
+    cout << "nombre ";
+    scanf(" %[^\n]", c.nombre);
+    cout << "descripcion ";
+    scanf(" %[^\n]", c.descripcion);
+    editar(&c, id);
+    cout << "registro actualizado.... \n";
+}
+
+void eliminarDatos(){
+    int id;
+    cout << "Ciudad - Eliminar\n";
+    cout << "ID: ";
+    cin >> id;
+    if (obtPos(id)== -1){
+        cout << "no se encontro registro \n";
+        return;
+    }
+    eliminar(id);
+
 }
